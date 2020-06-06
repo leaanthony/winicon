@@ -1,8 +1,17 @@
-# winicon
+<p align="center" style="text-align: center">
+   <img src="logo.png" width="40%"><br/>
+</p>
+<p align="center">
+   Windows .ico file generation library + cli. Works on all platforms supported by Go.<br/><br/>
+   <a href="https://github.com/leaanthony/winicon/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
+   <a href="https://goreportcard.com/report/github.com/leaanthony/winicon"><img src="https://goreportcard.com/badge/github.com/leaanthony/winicon"/></a>
+   <a href="http://godoc.org/github.com/leaanthony/winicon"><img src="https://img.shields.io/badge/godoc-reference-blue.svg"/></a>
+   <a href="https://www.codefactor.io/repository/github/leaanthony/winicon"><img src="https://www.codefactor.io/repository/github/leaanthony/winicon/badge" alt="CodeFactor" /></a>
+   <a href="https://github.com/leaanthony/winicon/issues"><img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat" /></a>
+   <a href="https://app.fossa.io/projects/git%2Bgithub.com%2Fleaanthony%2Fwinicon?ref=badge_shield" alt="FOSSA Status"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2Fleaanthony%2Fwinicon.svg?type=shield"/></a>
+</p>
 
-Windows ico file generation library + cli. Works on all platforms supported by Go.
-
-Winicon can:
+Features:
 
 * Provide information about an .ico file
 * Generate an .ico file at multiple sizes from a PNG 
