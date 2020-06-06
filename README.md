@@ -33,7 +33,9 @@ The cli has 3 commands: info (i), generate (g) and extract (x).
 
 You can get information about an .ico file by issuing the following command:
 
-`winicon i <myicon.png>`. Example:
+`winicon i <myicon.png>`. 
+
+Example:
 
 ```bash
 $ winicon i wails.ico 
@@ -54,7 +56,7 @@ Icon 8: Size: 192x192   Format: BMP     Bits Per Pixel: 32      Offset: 140238
 Icon 9: Size: 256x256   Format: PNG     Bits Per Pixel: 32      Offset: 292342
 ```
 
-There is also a `-json` flag to get this information (and a bit more):
+Winicon can return you detailed information in json format using the `-json` flag:
 
 ```bash
 $ winicon i -json wails.ico 
