@@ -1,7 +1,9 @@
 package winicon
 
 import (
+	"bytes"
 	"encoding/binary"
+	"fmt"
 	"io"
 
 	"github.com/leaanthony/winicon/internal/winicon"
@@ -18,6 +20,7 @@ type Icon struct {
 	Format       string
 	Offset       uint32
 	size         uint32
+	ErrorMessage string `json:"-"`
 }
 
 // GetFileData reads in the given .ico filename and returns information
@@ -64,6 +67,7 @@ func GetFileData(r io.Reader) ([]*Icon, error) {
 	// Loop over Icons to read in image data
 	for _, icon := range result {
 		icon.Data = make([]byte, icon.size)
+		println("Allocating bytes to image data:", icon.size)
 		_, err := r.Read(icon.Data)
 		if err != nil {
 			return nil, err
@@ -72,8 +76,49 @@ func GetFileData(r io.Reader) ([]*Icon, error) {
 			icon.Format = "PNG"
 		} else {
 			icon.Format = "BMP"
+			// Decode BMP
+			decodeBMP(icon)
 		}
 	}
 
 	return result, nil
+}
+
+func decodeBMP(icon *Icon) {
+	if icon.BitsPerPixel != 32 {
+		icon.ErrorMessage = fmt.Sprintf("BMP image at %d bits ber pixel unsupported.", icon.BitsPerPixel)
+		return
+	}
+	// Prefix the icon data with the BMP header
+	var dibheader winicon.BitmapInfoHeader
+	iconDataReader := bytes.NewReader(icon.Data)
+	binary.Read(iconDataReader, binary.LittleEndian, &dibheader)
+	dibheader.ImageWidth = uint32(icon.Width)
+	dibheader.ImageHeight = uint32(icon.Height)
+
+	bmpHeader := winicon.NewBitmapFileHeader(icon.size)
+
+	var icondata bytes.Buffer
+	err := binary.Write(&icondata, binary.LittleEndian, bmpHeader)
+	if err != nil {
+		println("Error:", err.Error())
+		icon.ErrorMessage = err.Error()
+		return
+	}
+
+	err = binary.Write(&icondata, binary.LittleEndian, &dibheader)
+	if err != nil {
+		println("Error:", err.Error())
+		icon.ErrorMessage = err.Error()
+		return
+	}
+
+	bytesInPixels := uint32(icon.Height * icon.Width * (icon.BitsPerPixel / 8))
+	err = binary.Write(&icondata, binary.LittleEndian, icon.Data[dibheader.HeaderSize:bytesInPixels+dibheader.HeaderSize])
+	if err != nil {
+		println("Error:", err.Error())
+		icon.ErrorMessage = err.Error()
+		return
+	}
+	icon.Data = icondata.Bytes()
 }

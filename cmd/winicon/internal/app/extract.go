@@ -35,8 +35,8 @@ func extract(cli *clir.Cli) *clir.Command {
 
 		basefilename := filepath.Base(strings.TrimSuffix(args[0], filepath.Ext(args[0])))
 		for _, icon := range icons {
-			if icon.Format != "PNG" {
-				badsizes = append(badsizes, fmt.Sprintf("%dx%d", icon.Width, icon.Height))
+			if icon.ErrorMessage != "" {
+				badsizes = append(badsizes, icon.ErrorMessage)
 				continue
 			}
 			// Open file
