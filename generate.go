@@ -36,9 +36,6 @@ func GenerateIcon(r io.Reader, w io.Writer, sizes []int) error {
 	for index, size := range sizes {
 
 		// Check target size
-		if size > 256 {
-			return fmt.Errorf("sizes > 256 not currently supported")
-		}
 		if size == 0 {
 			return fmt.Errorf("a size of 0 is not valid")
 		}
@@ -65,7 +62,7 @@ func GenerateIcon(r io.Reader, w io.Writer, sizes []int) error {
 		imageData.Write(icondata.Bytes())
 
 		// Save header information
-		if size == 256 {
+		if size >= 256 {
 			size = 0
 		}
 		iconheaders[index].Width = (uint8)(size)
