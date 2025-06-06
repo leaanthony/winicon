@@ -23,7 +23,7 @@ To install the cli tool:
 `go install github.com/leaanthony/winicon/cmd/winicon@latest`
 
 To use the library:
-`~/go/bin/winicon`
+`go get github.com/leaanthony/winicon`
 
 ## CLI Usage
 
