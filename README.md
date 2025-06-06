@@ -20,10 +20,10 @@ Features:
 ## Installation
 
 To install the cli tool:
-`go get github.com/leaanthony/winicon/cmd/winicon`
+`go install github.com/leaanthony/winicon/cmd/winicon@latest`
 
 To use the library:
-`go get github.com/leaanthony/winicon`
+`~/go/bin/winicon`
 
 ## CLI Usage
 
